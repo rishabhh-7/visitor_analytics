@@ -1,0 +1,45 @@
+<!-- myapp/templates/myapp/base.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Django Site{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Django Site</h1>
+    </header>
+    <nav>
+        Navigation links can go here -->
+    <!-- </nav>
+    <main>
+        {% block content %}
+        Main content will go here -->
+        <!-- {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 My Django Site</p>
+    </footer>
+</body>
+</html> --> 
+<!-- myapp/templates/upload.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Video</title>
+</head>
+<body>
+    <h1>Upload Video</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>
+
+

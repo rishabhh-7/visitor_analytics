@@ -1,0 +1,68 @@
+<!-- templates/upload_success.html -->
+
+<!-- show_graph.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Show Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div>
+        <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to fetch and update chart data
+            function updateChart() {
+                fetch('/update-graph-data/')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Process data to update chart
+                        const values = data.values;
+
+                        // Update or create a new Chart.js instance
+                        const ctx = document.getElementById('myChart').getContext('2d');
+                        if (window.myChart) {
+                            window.myChart.destroy(); // Destroy the old chart if it exists
+                        }
+                        window.myChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: Array.from({length: values.length}, (_, i) => i + 1), // Example labels
+                                datasets: [{
+                                    label: 'Values from storage.db',
+                                    data: values,
+                                    borderColor: 'blue',
+                                    backgroundColor: 'lightblue',
+                                    fill: true
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    x: {
+                                        type: 'linear', // Example x-axis type
+                                        position: 'bottom'
+                                    },
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    });
+            }
+
+            // Update chart every 5 seconds (adjust as needed)
+            setInterval(updateChart, 5000);
+
+            // Initial call to update chart on page load
+            updateChart();
+        });
+    </script>
+</body>
+</html>
