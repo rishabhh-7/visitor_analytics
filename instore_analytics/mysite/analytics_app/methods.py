@@ -1,16 +1,3 @@
-
-# # Assume video is an instance of the Video model
-# video = Video.objects.first()
-
-# # Example people count data
-# people_counts = [10, 15, 20]
-
-# # Save the data to the ProcessedData model
-# processed_data = ProcessedData.objects.create(video=video, people_count=people_counts)
-# processed_data.save()
-
-
-
 def process_video(video_path, videos):
     import cv2
     from collections import Counter
@@ -21,15 +8,10 @@ def process_video(video_path, videos):
     from .models import Video, ProcessedData
     print(f"Processing video: {video_path}")
     processed_data = ProcessedData.objects.create(video = videos, people_count=[])
-    # Add your video processing code here
 
-
-    
-    
     # cap = cv2.VideoCapture('rtsp://admin:Lemon123@172.16.100.199:554/Streaming/Channels/1101')
     # video_path = '/content/20240529165513094_L15428768_Camera 07_7_video.mov'
     # video_path = 'rtsp://admin:Lemon123@172.16.100.199:554/Streaming/Channels/1101'
-    # video_path = 0
     fps = 12
     print(">>>>>>")
     
@@ -50,6 +32,7 @@ def process_video(video_path, videos):
         cv2.destroyAllWindows()
         return processed_data
     people_counts = []
+    model = YOLO("yolov8s.pt")
     while True:
         ret, frame = video_capture.read()
         if not ret:
@@ -61,8 +44,7 @@ def process_video(video_path, videos):
             break
         frame_count += 1
         
-        if counter == time_between_frames:
-            model = YOLO("yolov8s.pt")  
+        if counter == time_between_frames:  
             snapshots = [frame]
         
             results = model(snapshots)
@@ -90,12 +72,4 @@ def process_video(video_path, videos):
     video_capture.release()
     cv2.destroyAllWindows()
     
-    
-# if __name__ == "__main__":
-#     if len(sys.argv) < 2:
-#         print('if')
-#         print("Usage: python main.py <video_path>")
-#     else:
-#         print('else')
-#         video_path = sys.argv[1]
-#         process_video(video_path)
+

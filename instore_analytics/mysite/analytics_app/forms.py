@@ -1,12 +1,7 @@
-# myapp/forms.py
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-
-# class VideoUploadForm(forms.Form):
-#     title = forms.CharField(max_length=100)
-#     video = forms.FileField()
-from django import forms
 from django.contrib.auth.models import User
+from .models import Video
 
 class SignUpForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -25,17 +20,15 @@ class SignUpForm(forms.ModelForm):
 
         return password_confirm
 
-
  # If you're using a custom user model
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         fields = ('username', 'email')  # Add other fields as needed
 
-from django import forms
-from .models import Video
 
 class VideoUploadForm(forms.ModelForm):
     class Meta:
         model = Video
         fields = ['video', 'title']
+        # fields = ['video']

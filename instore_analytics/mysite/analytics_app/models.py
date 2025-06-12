@@ -12,5 +12,3 @@ class ProcessedData(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     people_count = models.JSONField()
 
-
-# Create your models here.
